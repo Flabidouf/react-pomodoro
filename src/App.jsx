@@ -1,15 +1,14 @@
-import Timer from "./Timer.jsx";
-import ControlButtons from "./ControlButtons.jsx";
-import Display from "./Display.jsx";
+
 import "./App.css";
+import Timer from "./Timer.jsx";
+
+
 
 function App() {
   return (
     <>
       <div>
         <Timer />
-        <ControlButtons />
-        <Display />
       </div>
     </>
   );
@@ -18,6 +17,9 @@ function App() {
 export default App;
 
 // Next step :
+// Create a modal popup. Done
+// Do so that when the 25min is over, a 5min break timer launches. Done
+// Need a sound to tell when timer is over. Done
 // Use pico.css
-// Do so that the original timer is incremented. Only when it is stopped.
 // A spotify webplayer
+// Next.js
