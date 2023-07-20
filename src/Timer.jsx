@@ -5,19 +5,21 @@ import ReactPopup from "./ReactPopup";
 import alertTimer from "./assets/cow_sound.wav"
 
 
+
+
 const Timer = () => {
   const [timeRemaining, setTimeRemaining] = useState(0.1 * 60);
   const [timerStatus, setTimerStatus] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [timerExpired, setTimerExpired] = useState(false);
 
-
+  const [popUpTimeRemaining, setPopUpTimeRemaining] = useState(5 * 60);
   // See it as ... = useState(initialValue = ...)
 
   useEffect(() => {
     let intervalId;
 
-    if (timerStatus) {
+    if (timerStatus && timeRemaining > 0) {
       // = à true, pas besoin de le préciser, standard.
       intervalId = setInterval(() => {
         // setInterval is called with a callback function that decrements the timeRemaining state by 1 every second.
@@ -43,7 +45,7 @@ const Timer = () => {
     As a result, the display of the remaining time ({timeRemaining}) in the JSX updates every second.*/
 
     return () => clearInterval(intervalId);
-  }, [timerStatus]);
+  }, [timerStatus, timeRemaining]);
 
   useEffect(() => {
     if(showPopup) {
@@ -51,6 +53,20 @@ const Timer = () => {
     }
   }, []);
 
+// Display timer in tab + breaktime
+  useEffect(() => {
+    const title = showPopup ? `${formatTime(popUpTimeRemaining)}` : `${formatTime(timeRemaining)}`;
+    document.title = title;
+  }, [timeRemaining, showPopup, popUpTimeRemaining]);
+
+  const handlePopupTimeUpdate = (time) => {
+    setPopUpTimeRemaining(time);
+    setShowPopup(true); // Show the popup
+    setTimerStatus(false); // Pause the main timer
+  };
+
+
+  // Add an audio when timer reaches 0
   const audio = new Audio(alertTimer);
   useEffect(() => {
     if(timerExpired) {
@@ -58,7 +74,7 @@ const Timer = () => {
     }
   }, [timerExpired]);
 
-
+// Toggle between play and pause. Linked to the return 
   const toggleTimer = () => {
     if (timerStatus) {
       setTimerStatus(false);
@@ -102,27 +118,39 @@ const Timer = () => {
 
   return (
     <div className="timerDiv">
-      <div className="remainingTime">Time Remaining : {formatTime(timeRemaining)}</div>
+      <div className="remainingTime">
+        <h1>Pomodoro Timer</h1>
+        <h2 className="h-title"> Time Remaining :</h2>
+        <h2 className="h-title"> {formatTime(timeRemaining)} </h2>
+      </div>
        {showPopup && (
         <Popup open={true} closeOnDocumentClick={false}>
           <div className="popUp-div">
             <h3>You did just great</h3>
             <h2> Now take a break !</h2>
-            <ReactPopup />
-            <button onClick={() => {
-              handleClosePopup()
-              resetTimer()
-              setTimerStatus(true)
-              }}>Start again</button>
-              {/* Mettre une fonction dans des brackets comme en dessous */}
-            <button onClick={handleClosePopup}>Close</button>
+            <ReactPopup onPopupTimeUpdate={handlePopupTimeUpdate} />
+            <div className="break-btns">
+              <button className="start-btn" onClick={() => {
+                handleClosePopup()
+                resetTimer()
+                setTimerStatus(true)
+                }}>Start again</button>
+                {/* Mettre une fonction dans des brackets comme en dessous */}
+              <button className="close-btn" onClick={handleClosePopup}>Close</button>
+            </div>
           </div>
         </Popup>
       )} 
-      <button onClick={toggleTimer}>{timerStatus ? "Pause" : "Play"}</button>
-      <button onClick={resetTimer}>Reset</button>
-      <button onClick={() => incOrDecDuration(true) }>+</button>
-      <button onClick={() => incOrDecDuration(false) }>-</button>
+      <div className="div-btn">
+        <div>
+          <button className="btn" onClick={toggleTimer}>{timerStatus ? "Pause" : "Play"}</button>
+          <button className="btn" onClick={resetTimer}>Reset</button>
+        </div>
+        <div>
+          <button className="btn" onClick={() => incOrDecDuration(true) }>+</button>
+          <button className="btn" onClick={() => incOrDecDuration(false) }>-</button>
+        </div>
+      </div>
     </div>
   );
 }

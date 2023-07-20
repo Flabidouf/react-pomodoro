@@ -47,6 +47,7 @@ button {
   background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
+  color: white;
 }
 button:hover {
   border-color: #646cff;
@@ -56,7 +57,7 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-@media (prefers-color-scheme: light) {
+@media (prefers-color-scheme: dark) {
   :root {
     color: #213547;
     background-color: #ffffff;
@@ -68,6 +69,10 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+
+
+
 
 .popup-content {
   display:flex;
@@ -98,19 +103,68 @@ button:focus-visible {
   align-items: center;
 }
 
+
+
 .timerDiv {
   display:flex;
   flex-direction: column;
 }
 
 .remainingTime {
-  font-size:50px;
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  font-size:30px;
+  margin: 10px;
 }
 
 .breakTimeDiv {
-  font-size: 40px;
-  background-color: rgb(74, 221, 74);
+  font-size: 60px;
+  background-color: rgb(30, 177, 30);
   border: 2px solid black;
   border-radius: 10px;
-  padding:5px;
+  padding:10px;
+  margin: 10px 0;
+}
+
+h2, h3 {
+  color:black;
+}
+
+.h-title {
+  color:#E6E6E6;
+}
+
+.start-btn {
+  margin : 20px;
+  width: 200px;
+}
+
+.close-btn {
+  width:200px;
+  margin: 20px;
+}
+
+.break-btns {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
+}
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
+  color:#E6E6E6;
+  height: 40px;
+  font-size: 20px;
+  width: 300px;
+}
+
+.div-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 50px;
 }

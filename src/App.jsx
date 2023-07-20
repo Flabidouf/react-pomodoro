@@ -1,6 +1,8 @@
 
 import "./App.css";
+import SpotifyPlayer from "./SpotifyPlayer";
 import Timer from "./Timer.jsx";
+
 
 
 
@@ -9,6 +11,7 @@ function App() {
     <>
       <div>
         <Timer />
+        <SpotifyPlayer />
       </div>
     </>
   );

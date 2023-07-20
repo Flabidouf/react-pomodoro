@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import 'reactjs-popup/dist/index.css';
 
-const ReactPopup = () => {
+const ReactPopup = ({onPopupTimeUpdate, startBreakTimer}) => {
     const [popUpTimeRemaining, setPopUpTimeRemaining] = useState(5 * 60);
     const [timerStatus, setTimerStatus] = useState(false);
 
+   // Create a timer that decrement by 1 each 1000ms
     useEffect(() => {
         let intervalId;
     
@@ -26,7 +27,7 @@ const ReactPopup = () => {
       }, [timerStatus]);
 
       // To format the minutes in seconds.
-  const formatTime = (timeInSeconds) => {
+    const formatTime = (timeInSeconds) => {
     const minutes = Math.floor(timeInSeconds / 60);
     const seconds = timeInSeconds % 60;
     return `${minutes.toString().padStart(2, `0`)}: ${seconds.toString().padStart(2, `0`)}`;
@@ -35,6 +36,17 @@ const ReactPopup = () => {
 useEffect(() => {
   setTimerStatus(true)
 },[]);
+
+useEffect(() => {
+  if (startBreakTimer) {
+    setTimerStatus(true); // Start the break timer when startBreakTimer is true
+  }
+}, [startBreakTimer]);
+
+useEffect(() => {
+  onPopupTimeUpdate(popUpTimeRemaining); // Send the updated popUpTimeRemaining to Timer.jsx
+}, [popUpTimeRemaining, onPopupTimeUpdate]);
+
 
   return(
     <div className="breakTimeDiv">
