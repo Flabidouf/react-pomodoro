@@ -8,11 +8,10 @@ import alertTimer from "./assets/cow_sound.wav"
 
 
 const Timer = () => {
-  const [timeRemaining, setTimeRemaining] = useState(0.1 * 60);
+  const [timeRemaining, setTimeRemaining] = useState(25 * 60);
   const [timerStatus, setTimerStatus] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [timerExpired, setTimerExpired] = useState(false);
-
   const [popUpTimeRemaining, setPopUpTimeRemaining] = useState(5 * 60);
   // See it as ... = useState(initialValue = ...)
 
@@ -20,7 +19,8 @@ const Timer = () => {
     let intervalId;
 
     if (timerStatus && timeRemaining > 0) {
-      // = à true, pas besoin de le préciser, standard.
+      // Si pas d'était précisé -> = à true, pas besoin de le préciser, standard.
+      // > 0 pour que cela ne descende pas en dessous de 0.
       intervalId = setInterval(() => {
         // setInterval is called with a callback function that decrements the timeRemaining state by 1 every second.
         // The setInterval function returns a unique identifier, which is stored in the intervalId variable.
